@@ -1,13 +1,17 @@
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
+# APIRouter - группирует маршруты, UploadFile - для загрузки файлов, File - для работы с файлами, HTTPException - для обработки ошибок HTTP
 
 from backend.app.services.document_service import extract_text
+# та самая функция из сервисного слоя, которая умеет вытаскивать текст из байтов PDF, DOCX или TXT.
 
 router = APIRouter(prefix="/api", tags=["Учебники"])
 
 
 @router.post("/documents/upload")
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(file: UploadFile = File(...)): # функция для загрузки документа, принимает файл в формате UploadFile
+    """Загружает документ и извлекает текст.""" # подсказка
+
     if not file.filename:
         raise HTTPException(
             status_code=400,

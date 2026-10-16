@@ -1,16 +1,17 @@
+# готовая функция для извлечения текста из PDF, DOCX и TXT файлов и его содержимое в байтах
 
 from pathlib import Path
-from io import BytesIO
+from io import BytesIO # работает с файлами и преобразует их в байты
 
-from docx import Document
-from pypdf import PdfReader
+from docx import Document # для чтения DOCX файлов
+from pypdf import PdfReader # для чтения PDF файлов
 
 
 SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
 
 def extract_text(filename: str, content: bytes) -> str:
-    """Извлекает текст из PDF, DOCX или TXT."""
+    """Извлекает текст из PDF, DOCX или TXT.""" # подсказка
 
     extension = Path(filename).suffix.lower()
 

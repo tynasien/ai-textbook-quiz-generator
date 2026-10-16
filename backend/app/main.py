@@ -1,10 +1,11 @@
-
-from fastapi import FastAPI
+# точка входа (enrty point)
+# инициализация FastAPI приложения, настройка CORS и подключение маршрутов
+from fastapi import FastAPI # для создания веб-приложения FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.api.routes import router
 
-app = FastAPI(
+app = FastAPI( # главный объект приложения FastAPI
     title="AI Textbook Quiz Generator",
     description="Генерация интерактивных тестов по учебникам",
     version="0.1.0",
@@ -12,7 +13,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
+    allow_origins=[ # список разрешённых источников для CORS (Cross-Origin Resource Sharing)
         "http://localhost:5173",
         "http://127.0.0.1:5173",
     ],
