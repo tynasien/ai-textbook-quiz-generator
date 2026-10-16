@@ -14,9 +14,19 @@ CHROMA_DIR = BASE_DIR / "storage" / "chroma" # создаются папки
 CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 
 # компактная, но мощная мультиязычная модель. понимает слова и текста
-embedding_model = SentenceTransformer(
-    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-)
+_embedding_model = None
+
+
+def get_embedding_model():
+    """Загружает модель только при первом обращении."""
+    global _embedding_model
+
+    if _embedding_model is None:
+        _embedding_model = SentenceTransformer(
+            "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+        )
+
+    return _embedding_model
 
 client = chromadb.PersistentClient(
     path=str(CHROMA_DIR)
@@ -69,7 +79,7 @@ def index_textbook(text: str, filename: str) -> dict:
 
     document_id = str(uuid.uuid4())
 
-    embeddings = embedding_model.encode(
+    embeddings = get_embedding_model().encode(
         chunks,
         normalize_embeddings=True,
         show_progress_bar=False,
@@ -118,7 +128,7 @@ def search_textbook(
     if collection.count() == 0:
         return []
 
-    query_embedding = embedding_model.encode(
+    query_embedding = get_embedding_model().encode(
         [query],
         normalize_embeddings=True,
     ).tolist()
