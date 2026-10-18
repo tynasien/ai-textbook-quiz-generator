@@ -25,3 +25,5 @@ backend/storage/uploads/*
 # IDE and OS
 .DS_Store
 .vscode/
+
+backend/storage/
