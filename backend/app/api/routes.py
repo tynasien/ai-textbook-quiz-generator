@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel, Field
+# для описания и валидации структуры входящих данных
 
 from backend.app.services.document_service import extract_text
 from backend.app.services.rag_service import (
